@@ -1,0 +1,47 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'travel.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="header">
+            <h2>Update Your Travel</h2>
+        </div>
+
+        <form class="form-control" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+        </form>
+
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script>
+
+        $( "#country" ).change(function(e) {
+             country_id = e.target.value;
+            $.ajax({
+                method: "GET",
+                url: '{% url 'upload-cities' %}',
+                data:{'country_id':country_id},
+                dataType:'json',
+                success: function (data){
+                    $('#city').html(data.include);
+                }
+            })
+        });
+    </script>
+</body>
+</html>
